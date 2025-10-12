@@ -1,5 +1,5 @@
 # Importing flask library
-from flask import Flask , Response
+from flask import Flask ,request, Response, globals, jsonify
 
 # Creating a flask object 
 app = Flask(__name__)
@@ -11,20 +11,32 @@ def home():
 
 # Creating a about page route
 @app.route("/about")
-def home():
-    return "Hello user! This is my first flask app"
+def about():
+    return "Hello user! This is about page"
 
 # Creating a contact page route
 @app.route("/contact")
-def home():
-    return "Hello user! This is my first flask app"
+def contact():
+    return "Hello user! This is contact page"
 
 # Creating a information page route
 @app.route("/information")
-def home():
-    return "Hello user! This is my first flask app"
+def information():
+    return "Hello user! This is information page"
 
+# Creating a route to get total request count
+count = 0
+@app.before_request
+def request_count():
+    global count
+    count += 1
 
+@app.route("/traffic/counter", methods=["GET"])
+def request_counter() -> Response:
+    return jsonify({
+        "Total_Requests" : count
+    })
+    
 ## IMPORTANT NOTES AND INSTRUCTIONS
 
 # 01 : Always write the endpoints of route specific and complete use complete naming insted of using shortcut name.
@@ -35,3 +47,15 @@ def home():
 
 # 03 : Always remember to return a response even its nun or null. If you dont return a response the flask server may break.
 # Example : @app.route("/admin") function-x is a bad code and the correct version of this is @app.route("/admin") function-x return "Admin is here".
+
+# 04 : By default the if methods are not mentioned the route requests will be considered as GET requests.
+# Example : Given bellow :
+# @app.route("/information")
+# def information(): 
+#     return "Hey coder you are on the information page"
+
+# @app.route("/information", methods = ["GET"])
+# def information() -> Response:
+#     return "Hey coder you are on the information page"
+
+# Both the routes are the same but the second one is mode detailed and more profassional way of writing the code. And its more preferable and industry standard to minimise errors and bugs.
