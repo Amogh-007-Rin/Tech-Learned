@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Jinja2 Macros Demo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <h2>Jinja2 Macros Demo</h2>
+        <p class="lead">This page demonstrates the use of Jinja2 macros for reusable template components.</p>
+
+        <!-- Macro Definition -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Macro Definitions</h5>
+            </div>
+            <div class="card-body">
+                <p>Macros are defined in the <code>macros.html</code> file and imported here:</p>
+                <pre><code>{% from 'macros.html' import user_card, alert_box, button_group %}</code></pre>
+                
+                <h6>Available Macros:</h6>
+                <ul>
+                    <li><code>user_card(user, show_actions=True)</code> - Display user information</li>
+                    <li><code>alert_box(message, type='info')</code> - Display alert messages</li>
+                    <li><code>button_group(buttons)</code> - Display button groups</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- User Cards using Macros -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">User Cards (Using Macros)</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for user in users %}
+                        <div class="col-md-6 mb-3">
+                            {{ user_card(user, show_actions=true) }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Boxes using Macros -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Alert Boxes (Using Macros)</h5>
+            </div>
+            <div class="card-body">
+                {{ alert_box('This is a success message!', 'success') }}
+                {{ alert_box('This is an info message!', 'info') }}
+                {{ alert_box('This is a warning message!', 'warning') }}
+                {{ alert_box('This is an error message!', 'danger') }}
+            </div>
+        </div>
+
+        <!-- Button Groups using Macros -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Button Groups (Using Macros)</h5>
+            </div>
+            <div class="card-body">
+                <h6>Action Buttons:</h6>
+                {{ button_group([
+                    {'text': 'Edit', 'class': 'btn-primary', 'onclick': 'alert("Edit clicked")'},
+                    {'text': 'Delete', 'class': 'btn-danger', 'onclick': 'alert("Delete clicked")'},
+                    {'text': 'View', 'class': 'btn-info', 'onclick': 'alert("View clicked")'}
+                ]) }}
+
+                <h6 class="mt-3">Navigation Buttons:</h6>
+                {{ button_group([
+                    {'text': 'Previous', 'class': 'btn-outline-secondary', 'onclick': 'alert("Previous clicked")'},
+                    {'text': 'Next', 'class': 'btn-outline-primary', 'onclick': 'alert("Next clicked")'}
+                ]) }}
+            </div>
+        </div>
+
+        <!-- Macro Benefits -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Macro Benefits</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Advantages:</h6>
+                        <ul>
+                            <li>✓ Code reusability</li>
+                            <li>✓ Consistent styling</li>
+                            <li>✓ Easy maintenance</li>
+                            <li>✓ Parameter flexibility</li>
+                            <li>✓ Template organization</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Use Cases:</h6>
+                        <ul>
+                            <li>• User profile cards</li>
+                            <li>• Alert messages</li>
+                            <li>• Button groups</li>
+                            <li>• Form elements</li>
+                            <li>• Navigation components</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Macro Syntax -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Macro Syntax</h5>
+            </div>
+            <div class="card-body">
+                <h6>Definition:</h6>
+                <pre><code>{% macro macro_name(param1, param2='default') %}
+    <!-- Macro content -->
+{% endmacro %}</code></pre>
+
+                <h6>Import:</h6>
+                <pre><code>{% from 'macros.html' import macro_name %}</code></pre>
+
+                <h6>Usage:</h6>
+                <pre><code>{{ macro_name(value1, value2) }}</code></pre>
+
+                <h6>Example:</h6>
+                <pre><code>{% macro user_card(user) %}
+    <div class="card">
+        <div class="card-body">
+            <h5>{{ user.name }}</h5>
+            <p>{{ user.email }}</p>
+        </div>
+    </div>
+{% endmacro %}</code></pre>
+            </div>
+        </div>
+
+        <!-- Macro vs Include -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="mb-0">Macro vs Include</h5>
+            </div>
+            <div class="card-body">
+                <h6>Macros:</h6>
+                <ul class="list-unstyled small">
+                    <li>• Reusable functions</li>
+                    <li>• Accept parameters</li>
+                    <li>• Return HTML</li>
+                    <li>• Defined once, used many</li>
+                </ul>
+
+                <h6>Includes:</h6>
+                <ul class="list-unstyled small">
+                    <li>• Static content</li>
+                    <li>• No parameters</li>
+                    <li>• Complete templates</li>
+                    <li>• Copied as-is</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Best Practices -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="mb-0">Best Practices</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled small">
+                    <li>• Keep macros simple</li>
+                    <li>• Use descriptive names</li>
+                    <li>• Provide default values</li>
+                    <li>• Document parameters</li>
+                    <li>• Group related macros</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

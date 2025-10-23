@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Users List{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Registered Users</h2>
+    <span class="badge bg-primary fs-6">Total: {{ users|length }} users</span>
+</div>
+
+{% if users %}
+    <div class="row">
+        {% for user in users %}
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user.username }}</h5>
+                        <p class="card-text">
+                            <strong>Email:</strong> {{ user.email }}<br>
+                            <strong>Age:</strong> {{ user.age }} years<br>
+                            <strong>Country:</strong> {{ user.country }}<br>
+                            <strong>Gender:</strong> {{ user.gender }}<br>
+                            <strong>Newsletter:</strong> {{ 'Yes' if user.newsletter else 'No' }}
+                        </p>
+                        <small class="text-muted">
+                            Registered: {{ user.created_at.strftime('%Y-%m-%d %H:%M') }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="text-center py-5">
+        <h4 class="text-muted">No users registered yet</h4>
+        <p class="text-muted">Be the first to register!</p>
+        <a href="{{ url_for('register') }}" class="btn btn-primary">Register Now</a>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <h1 class="display-4">Welcome to Flask Forms!</h1>
+        <p class="lead">
+            This chapter demonstrates comprehensive form handling in Flask using WTForms and Flask-WTF.
+        </p>
+        
+        <!-- Form Features Overview -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Form Features Demonstrated</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Form Types:</h6>
+                        <ul class="list-unstyled">
+                            <li>✓ Contact Forms</li>
+                            <li>✓ User Registration</li>
+                            <li>✓ Profile Management</li>
+                            <li>✓ File Uploads</li>
+                            <li>✓ Search Forms</li>
+                            <li>✓ Blog Posts</li>
+                            <li>✓ Surveys</li>
+                            <li>✓ Dynamic Forms</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Form Features:</h6>
+                        <ul class="list-unstyled">
+                            <li>✓ CSRF Protection</li>
+                            <li>✓ Field Validation</li>
+                            <li>✓ Custom Validators</li>
+                            <li>✓ File Upload Handling</li>
+                            <li>✓ Form Rendering</li>
+                            <li>✓ Error Display</li>
+                            <li>✓ AJAX Integration</li>
+                            <li>✓ Bootstrap Styling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Field Types -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Form Field Types</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6>Text Fields:</h6>
+                        <ul class="list-unstyled small">
+                            <li>• StringField</li>
+                            <li>• TextAreaField</li>
+                            <li>• PasswordField</li>
+                            <li>• HiddenField</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Selection Fields:</h6>
+                        <ul class="list-unstyled small">
+                            <li>• SelectField</li>
+                            <li>• RadioField</li>
+                            <li>• BooleanField</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Special Fields:</h6>
+                        <ul class="list-unstyled small">
+                            <li>• FileField</li>
+                            <li>• DateField</li>
+                            <li>• IntegerField</li>
+                            <li>• FloatField</li>
+                            <li>• FieldList</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Validation Features -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Validation Features</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Built-in Validators:</h6>
+                        <ul class="list-unstyled small">
+                            <li>• DataRequired</li>
+                            <li>• Email</li>
+                            <li>• Length</li>
+                            <li>• NumberRange</li>
+                            <li>• Regexp</li>
+                            <li>• EqualTo</li>
+                            <li>• Optional</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Custom Validators:</h6>
+                        <ul class="list-unstyled small">
+                            <li>• Username validation</li>
+                            <li>• Age validation</li>
+                            <li>• Business logic validation</li>
+                            <li>• Cross-field validation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Quick Navigation -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Form Examples</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('contact') }}" class="btn btn-outline-primary">Contact Form</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-outline-success">User Registration</a>
+                    <a href="{{ url_for('profile') }}" class="btn btn-outline-info">User Profile</a>
+                    <a href="{{ url_for('upload') }}" class="btn btn-outline-warning">File Upload</a>
+                    <a href="{{ url_for('create_post') }}" class="btn btn-outline-secondary">Create Post</a>
+                    <a href="{{ url_for('survey') }}" class="btn btn-outline-dark">Survey Form</a>
+                    <a href="{{ url_for('dynamic_form') }}" class="btn btn-outline-danger">Dynamic Form</a>
+                    <a href="{{ url_for('search') }}" class="btn btn-outline-primary">Search Form</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Overview -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="mb-0">Data Overview</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-4">
+                        <h4 class="text-primary">{{ user_count }}</h4>
+                        <small>Users</small>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="text-success">{{ post_count }}</h4>
+                        <small>Posts</small>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="text-info">{{ post_count }}</h4>
+                        <small>Files</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Best Practices -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="mb-0">Form Best Practices</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled small">
+                    <li>✓ Always use CSRF protection</li>
+                    <li>✓ Validate on both client and server</li>
+                    <li>✓ Provide clear error messages</li>
+                    <li>✓ Use appropriate field types</li>
+                    <li>✓ Implement proper file upload handling</li>
+                    <li>✓ Sanitize user input</li>
+                    <li>✓ Use HTTPS in production</li>
+                    <li>✓ Implement rate limiting</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

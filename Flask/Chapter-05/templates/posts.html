@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Blog Posts{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Blog Posts</h2>
+    <span class="badge bg-primary fs-6">Total: {{ posts|length }} posts</span>
+</div>
+
+{% if posts %}
+    {% for post in posts %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.content[:200] }}{% if post.content|length > 200 %}...{% endif %}</p>
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="badge bg-secondary">{{ post.category }}</span>
+                        {% if post.tags %}
+                            {% for tag in post.tags %}
+                                <span class="badge bg-light text-dark">{{ tag }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <small class="text-muted">
+                        {% if post.is_published %}
+                            <span class="text-success">Published</span>
+                        {% else %}
+                            <span class="text-warning">Draft</span>
+                        {% endif %}
+                        - {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="text-center py-5">
+        <h4 class="text-muted">No posts available</h4>
+        <p class="text-muted">Create your first blog post!</p>
+        <a href="{{ url_for('create_post') }}" class="btn btn-primary">Create Post</a>
+    </div>
+{% endif %}
+{% endblock %}

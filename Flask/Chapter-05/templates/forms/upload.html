@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}File Upload{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">File Upload</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Upload files to our platform. Supported formats: txt, pdf, png, jpg, jpeg, gif, doc, docx</p>
+                
+                <!-- File Upload Form -->
+                <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.title.label(class="form-label") }}
+                        {{ form.title(class="form-control" + (" is-invalid" if form.title.errors else "")) }}
+                        {% if form.title.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.title.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.description.label(class="form-label") }}
+                        {{ form.description(class="form-control" + (" is-invalid" if form.description.errors else ""), rows="3") }}
+                        {% if form.description.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.description.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.file.label(class="form-label") }}
+                        {{ form.file(class="form-control" + (" is-invalid" if form.file.errors else "")) }}
+                        {% if form.file.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.file.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">Maximum file size: 16MB</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.category.label(class="form-label") }}
+                        {{ form.category(class="form-select" + (" is-invalid" if form.category.errors else "")) }}
+                        {% if form.category.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.category.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="reset" class="btn btn-outline-secondary me-md-2">Clear Form</button>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- File Upload Features -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">File Upload Features</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Security Features:</h6>
+                        <ul class="list-unstyled">
+                            <li>✓ File type validation</li>
+                            <li>✓ File size limits</li>
+                            <li>✓ Secure filename generation</li>
+                            <li>✓ Upload directory isolation</li>
+                            <li>✓ CSRF protection</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Supported Formats:</h6>
+                        <ul class="list-unstyled">
+                            <li>• Documents: txt, pdf, doc, docx</li>
+                            <li>• Images: png, jpg, jpeg, gif</li>
+                            <li>• Maximum size: 16MB</li>
+                            <li>• Secure storage</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Upload Code -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">File Upload Implementation</h5>
+            </div>
+            <div class="card-body">
+                <pre><code># Form definition
+class FileUploadForm(FlaskForm):
+    title = StringField('File Title', validators=[DataRequired()])
+    file = FileField('Choose File', validators=[
+        FileRequired(),
+        FileAllowed(['txt', 'pdf', 'png', 'jpg'], 'File type not allowed!')
+    ])
+
+# Route handling
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    form = FileUploadForm()
+    if form.validate_on_submit():
+        file = form.file.data
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        flash('File uploaded successfully!', 'success')
+        return redirect(url_for('upload'))
+    return render_template('upload.html', form=form)</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block title %}Jinja2 Filters Demo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <h2>Jinja2 Filters Demo</h2>
+        <p class="lead">This page demonstrates various Jinja2 filters and their usage.</p>
+
+        <!-- String Filters -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">String Filters</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Original Text:</strong> "{{ sample_text }}"</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Filter</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>upper</code></td>
+                                    <td>{{ sample_text|upper }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>lower</code></td>
+                                    <td>{{ sample_text|lower }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>title</code></td>
+                                    <td>{{ sample_text|title }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>capitalize</code></td>
+                                    <td>{{ sample_text|capitalize }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Filter</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>length</code></td>
+                                    <td>{{ sample_text|length }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>reverse</code></td>
+                                    <td>{{ sample_text|reverse }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>replace(' ', '-')</code></td>
+                                    <td>{{ sample_text|replace(' ', '-') }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>truncate(5)</code></td>
+                                    <td>{{ sample_text|truncate(5) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- List Filters -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">List Filters</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Original List:</strong> {{ sample_list }}</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Filter</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>length</code></td>
+                                    <td>{{ sample_list|length }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>first</code></td>
+                                    <td>{{ sample_list|first }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>last</code></td>
+                                    <td>{{ sample_list|last }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>sum</code></td>
+                                    <td>{{ sample_list|sum }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Filter</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>max</code></td>
+                                    <td>{{ sample_list|max }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>min</code></td>
+                                    <td>{{ sample_list|min }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>join(', ')</code></td>
+                                    <td>{{ sample_list|join(', ') }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>reverse</code></td>
+                                    <td>{{ sample_list|reverse }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dictionary Filters -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Dictionary Filters</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Original Dictionary:</strong> {{ sample_dict }}</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Filter</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>length</code></td>
+                                    <td>{{ sample_dict|length }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>keys</code></td>
+                                    <td>{{ sample_dict|keys|list }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>values</code></td>
+                                    <td>{{ sample_dict|values|list }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>items</code></td>
+                                    <td>{{ sample_dict|items|list }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Dictionary Access:</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>name:</strong> {{ sample_dict.name }}</li>
+                            <li><strong>age:</strong> {{ sample_dict.age }}</li>
+                            <li><strong>city:</strong> {{ sample_dict.city }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Filters -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Custom Filters</h5>
+            </div>
+            <div class="card-body">
+                <p>These filters are defined in the Flask application:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Datetime Filter:</h6>
+                        <p><code>{{ current_time|datetime }}</code></p>
+                        <p><strong>Result:</strong> {{ current_time|datetime }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Currency Filter:</h6>
+                        <p><code>{{ 123.45|currency }}</code></p>
+                        <p><strong>Result:</strong> {{ 123.45|currency }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Filter Categories -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Filter Categories</h5>
+            </div>
+            <div class="card-body">
+                <h6>String Filters:</h6>
+                <ul class="list-unstyled small">
+                    <li>• upper, lower, title</li>
+                    <li>• capitalize, reverse</li>
+                    <li>• length, truncate</li>
+                    <li>• replace, strip</li>
+                </ul>
+
+                <h6>List Filters:</h6>
+                <ul class="list-unstyled small">
+                    <li>• length, first, last</li>
+                    <li>• sum, max, min</li>
+                    <li>• join, reverse</li>
+                    <li>• sort, unique</li>
+                </ul>
+
+                <h6>Number Filters:</h6>
+                <ul class="list-unstyled small">
+                    <li>• round, int, float</li>
+                    <li>• abs, sum</li>
+                    <li>• max, min</li>
+                </ul>
+
+                <h6>Date Filters:</h6>
+                <ul class="list-unstyled small">
+                    <li>• date, time</li>
+                    <li>• datetime</li>
+                    <li>• strftime</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Filter Syntax -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="mb-0">Filter Syntax</h5>
+            </div>
+            <div class="card-body">
+                <h6>Basic Usage:</h6>
+                <pre><code>{{ variable|filter }}</code></pre>
+
+                <h6>With Parameters:</h6>
+                <pre><code>{{ variable|filter(arg) }}</code></pre>
+
+                <h6>Chaining Filters:</h6>
+                <pre><code>{{ variable|filter1|filter2 }}</code></pre>
+
+                <h6>Example:</h6>
+                <pre><code>{{ "hello world"|title|replace(" ", "-") }}</code></pre>
+                <p><strong>Result:</strong> {{ "hello world"|title|replace(" ", "-") }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

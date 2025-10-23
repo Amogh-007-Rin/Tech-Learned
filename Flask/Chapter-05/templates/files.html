@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Uploaded Files{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Uploaded Files</h2>
+    <span class="badge bg-primary fs-6">Total: {{ files|length }} files</span>
+</div>
+
+{% if files %}
+    <div class="row">
+        {% for file in files %}
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ file.title }}</h5>
+                        <p class="card-text">
+                            <strong>Description:</strong> {{ file.description or 'No description' }}<br>
+                            <strong>Category:</strong> {{ file.category }}<br>
+                            <strong>File:</strong> {{ file.original_filename }}<br>
+                            <strong>Size:</strong> {{ (file.file_size / 1024)|round(1) }} KB
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{ url_for('uploaded_file', filename=file.filename) }}" 
+                               class="btn btn-outline-primary btn-sm" target="_blank">
+                                View File
+                            </a>
+                            <small class="text-muted">
+                                {{ file.uploaded_at.strftime('%Y-%m-%d %H:%M') }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="text-center py-5">
+        <h4 class="text-muted">No files uploaded yet</h4>
+        <p class="text-muted">Upload your first file!</p>
+        <a href="{{ url_for('upload') }}" class="btn btn-primary">Upload File</a>
+    </div>
+{% endif %}
+{% endblock %}

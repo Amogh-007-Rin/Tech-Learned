@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Form{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Contact Us</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Send us a message and we'll get back to you as soon as possible.</p>
+                
+                <!-- Contact Form -->
+                <form method="POST" action="{{ url_for('contact') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.name.label(class="form-label") }}
+                                {{ form.name(class="form-control" + (" is-invalid" if form.name.errors else "")) }}
+                                {% if form.name.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.name.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.email.label(class="form-label") }}
+                                {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else "")) }}
+                                {% if form.email.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.subject.label(class="form-label") }}
+                        {{ form.subject(class="form-control" + (" is-invalid" if form.subject.errors else "")) }}
+                        {% if form.subject.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.subject.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.message.label(class="form-label") }}
+                        {{ form.message(class="form-control" + (" is-invalid" if form.message.errors else ""), rows="5") }}
+                        {% if form.message.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.message.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="reset" class="btn btn-outline-secondary me-md-2">Clear Form</button>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Form Features Demo -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Form Features Demonstrated</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>WTForms Features:</h6>
+                        <ul class="list-unstyled">
+                            <li>✓ CSRF Protection</li>
+                            <li>✓ Field Validation</li>
+                            <li>✓ Error Handling</li>
+                            <li>✓ Form Rendering</li>
+                            <li>✓ Bootstrap Integration</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Validation Rules:</h6>
+                        <ul class="list-unstyled">
+                            <li>• Name: Required, 2-50 chars</li>
+                            <li>• Email: Required, valid email</li>
+                            <li>• Subject: Required, 5-100 chars</li>
+                            <li>• Message: Required, 10-1000 chars</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Example -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Form Definition Example</h5>
+            </div>
+            <div class="card-body">
+                <pre><code>class ContactForm(FlaskForm):
+    name = StringField('Name', validators=[
+        DataRequired(), 
+        Length(min=2, max=50)
+    ])
+    email = StringField('Email', validators=[
+        DataRequired(), 
+        Email()
+    ])
+    subject = StringField('Subject', validators=[
+        DataRequired(), 
+        Length(min=5, max=100)
+    ])
+    message = TextAreaField('Message', validators=[
+        DataRequired(), 
+        Length(min=10, max=1000)
+    ])
+    submit = SubmitField('Send Message')</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

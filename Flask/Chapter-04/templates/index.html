@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <h1 class="display-4">Welcome to Flask Templates!</h1>
+        <p class="lead">
+            This chapter demonstrates the power of Jinja2 templating engine in Flask applications.
+        </p>
+        
+        <!-- Template Variables -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Template Variables</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Current Time:</strong> {{ current_time|datetime }}</p>
+                <p><strong>Total Users:</strong> {{ user_count }}</p>
+                <p><strong>Site Name:</strong> {{ site_name }}</p>
+                <p><strong>App Version:</strong> {{ app_version }}</p>
+            </div>
+        </div>
+
+        <!-- Template Control Structures -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Template Control Structures</h5>
+            </div>
+            <div class="card-body">
+                <h6>Conditional Statements:</h6>
+                {% if user_count > 0 %}
+                    <p class="text-success">✓ We have {{ user_count }} user(s) registered!</p>
+                {% else %}
+                    <p class="text-warning">⚠ No users registered yet.</p>
+                {% endif %}
+
+                <h6 class="mt-3">Loop Example:</h6>
+                <ul class="list-group">
+                    {% for user in users[:3] %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ user.name }}
+                            <span class="badge bg-primary rounded-pill">{{ user.city }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Template Filters -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Template Filters</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Text Filters:</strong></p>
+                <ul>
+                    <li><code>title</code>: "hello world" → "Hello World"</li>
+                    <li><code>upper</code>: "hello world" → "HELLO WORLD"</li>
+                    <li><code>lower</code>: "HELLO WORLD" → "hello world"</li>
+                    <li><code>length</code>: "hello" → 5</li>
+                </ul>
+                
+                <p><strong>Custom Filters:</strong></p>
+                <ul>
+                    <li><code>datetime</code>: Formats datetime objects</li>
+                    <li><code>currency</code>: Formats numbers as currency</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Quick Navigation -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Quick Navigation</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('users_list') }}" class="btn btn-outline-primary">View Users</a>
+                    <a href="{{ url_for('posts_list') }}" class="btn btn-outline-secondary">View Posts</a>
+                    <a href="{{ url_for('contact') }}" class="btn btn-outline-success">Contact Us</a>
+                    <a href="{{ url_for('demo_filters') }}" class="btn btn-outline-info">Filters Demo</a>
+                    <a href="{{ url_for('demo_macros') }}" class="btn btn-outline-warning">Macros Demo</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Template Features -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="mb-0">Template Features</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li>✓ Template Inheritance</li>
+                    <li>✓ Template Blocks</li>
+                    <li>✓ Template Variables</li>
+                    <li>✓ Template Filters</li>
+                    <li>✓ Template Control Structures</li>
+                    <li>✓ Template Macros</li>
+                    <li>✓ Template Includes</li>
+                    <li>✓ Custom Filters</li>
+                    <li>✓ Context Processors</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

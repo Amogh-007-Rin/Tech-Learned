@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}User Registration{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">User Registration</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Create your account to get started with our platform.</p>
+                
+                <!-- Registration Form -->
+                <form method="POST" action="{{ url_for('register') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.username.label(class="form-label") }}
+                                {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else "")) }}
+                                {% if form.username.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.username.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="form-text">3-20 characters, letters, numbers, and underscores only</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.email.label(class="form-label") }}
+                                {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else "")) }}
+                                {% if form.email.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.password.label(class="form-label") }}
+                                {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else "")) }}
+                                {% if form.password.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.password.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="form-text">Minimum 8 characters</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.confirm_password.label(class="form-label") }}
+                                {{ form.confirm_password(class="form-control" + (" is-invalid" if form.confirm_password.errors else "")) }}
+                                {% if form.confirm_password.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.confirm_password.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.age.label(class="form-label") }}
+                                {{ form.age(class="form-control" + (" is-invalid" if form.age.errors else "")) }}
+                                {% if form.age.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.age.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.country.label(class="form-label") }}
+                                {{ form.country(class="form-select" + (" is-invalid" if form.country.errors else "")) }}
+                                {% if form.country.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.country.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Gender</label>
+                        <div class="form-check">
+                            {% for subfield in form.gender %}
+                                <div class="form-check form-check-inline">
+                                    {{ subfield(class="form-check-input" + (" is-invalid" if form.gender.errors else "")) }}
+                                    {{ subfield.label(class="form-check-label") }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.gender.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.gender.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check">
+                            {{ form.newsletter(class="form-check-input") }}
+                            {{ form.newsletter.label(class="form-check-label") }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check">
+                            {{ form.terms(class="form-check-input" + (" is-invalid" if form.terms.errors else "")) }}
+                            {{ form.terms.label(class="form-check-label") }}
+                            {% if form.terms.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.terms.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="reset" class="btn btn-outline-secondary me-md-2">Clear Form</button>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Form Features -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Advanced Form Features</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Field Types Used:</h6>
+                        <ul class="list-unstyled">
+                            <li>• StringField (username, email)</li>
+                            <li>• PasswordField (password, confirm)</li>
+                            <li>• IntegerField (age)</li>
+                            <li>• SelectField (country)</li>
+                            <li>• RadioField (gender)</li>
+                            <li>• BooleanField (newsletter, terms)</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Validators Used:</h6>
+                        <ul class="list-unstyled">
+                            <li>• DataRequired</li>
+                            <li>• Length</li>
+                            <li>• Email</li>
+                            <li>• Regexp</li>
+                            <li>• EqualTo</li>
+                            <li>• NumberRange</li>
+                            <li>• Custom validators</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Validators -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Custom Validators</h5>
+            </div>
+            <div class="card-body">
+                <pre><code>def validate_username(form, field):
+    if field.data.lower() in ['admin', 'root', 'user']:
+        raise ValidationError('This username is not allowed.')
+
+def validate_age(form, field):
+    if field.data < 13:
+        raise ValidationError('You must be at least 13 years old.')
+    if field.data > 120:
+        raise ValidationError('Please enter a valid age.')</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

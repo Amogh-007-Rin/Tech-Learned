@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}User Survey{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">User Survey</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Help us improve our platform by sharing your feedback.</p>
+                
+                <!-- Survey Form -->
+                <form method="POST" action="{{ url_for('survey') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.name.label(class="form-label") }}
+                                {{ form.name(class="form-control" + (" is-invalid" if form.name.errors else "")) }}
+                                {% if form.name.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.name.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.email.label(class="form-label") }}
+                                {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else "")) }}
+                                {% if form.email.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Age Group</label>
+                        <div class="form-check">
+                            {% for subfield in form.age_group %}
+                                <div class="form-check form-check-inline">
+                                    {{ subfield(class="form-check-input" + (" is-invalid" if form.age_group.errors else "")) }}
+                                    {{ subfield.label(class="form-check-label") }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.age_group.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.age_group.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.interests.label(class="form-label") }}
+                        {{ form.interests(class="form-select" + (" is-invalid" if form.interests.errors else "")) }}
+                        {% if form.interests.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.interests.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.rating.label(class="form-label") }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form.rating(class="form-control" + (" is-invalid" if form.rating.errors else "")) }}
+                                {% if form.rating.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.rating.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-text">Rate from 1 (poor) to 10 (excellent)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.comments.label(class="form-label") }}
+                        {{ form.comments(class="form-control" + (" is-invalid" if form.comments.errors else ""), rows="4") }}
+                        {% if form.comments.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">Optional: Share any additional thoughts</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check">
+                            {{ form.subscribe(class="form-check-input") }}
+                            {{ form.subscribe.label(class="form-check-label") }}
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="reset" class="btn btn-outline-secondary me-md-2">Clear Form</button>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Survey Features -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Survey Form Features</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Form Elements:</h6>
+                        <ul class="list-unstyled">
+                            <li>• Text inputs (name, email)</li>
+                            <li>• Radio buttons (age group)</li>
+                            <li>• Select dropdown (interests)</li>
+                            <li>• Number input (rating)</li>
+                            <li>• Textarea (comments)</li>
+                            <li>• Checkbox (subscribe)</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Validation Features:</h6>
+                        <ul class="list-unstyled">
+                            <li>• Required field validation</li>
+                            <li>• Email format validation</li>
+                            <li>• Number range validation</li>
+                            <li>• Optional field handling</li>
+                            <li>• Error message display</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Search</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Search through our content.</p>
+                
+                <!-- Search Form -->
+                <form method="POST" action="{{ url_for('search') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                {{ form.query.label(class="form-label") }}
+                                {{ form.query(class="form-control" + (" is-invalid" if form.query.errors else "")) }}
+                                {% if form.query.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.query.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                {{ form.category.label(class="form-label") }}
+                                {{ form.category(class="form-select" + (" is-invalid" if form.category.errors else "")) }}
+                                {% if form.category.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.category.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Search Results -->
+        {% if results %}
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Search Results</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Found {{ results|length }} result(s)</p>
+                    
+                    {% for result in results %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <span class="badge bg-primary">{{ result.type|title }}</span>
+                                    {% if result.type == 'user' %}
+                                        {{ result.data.username }}
+                                    {% elif result.type == 'post' %}
+                                        {{ result.data.title }}
+                                    {% endif %}
+                                </h6>
+                                <p class="card-text">
+                                    {% if result.type == 'user' %}
+                                        Email: {{ result.data.email }}<br>
+                                        Age: {{ result.data.age }}<br>
+                                        Country: {{ result.data.country }}
+                                    {% elif result.type == 'post' %}
+                                        {{ result.data.content[:200] }}{% if result.data.content|length > 200 %}...{% endif %}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

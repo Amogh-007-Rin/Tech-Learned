@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Blog Posts{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Blog Posts</h2>
+    <span class="badge bg-primary fs-6">{{ posts|length }} posts</span>
+</div>
+
+<!-- Posts List -->
+{% if posts %}
+    {% for post in posts %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content }}</p>
+                        
+                        <!-- Post Meta Information -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-muted">
+                                    <strong>Author:</strong> {{ post.author }} | 
+                                    <strong>Date:</strong> {{ post.date }}
+                                </small>
+                            </div>
+                            <div>
+                                <span class="badge bg-secondary">Post #{{ post.id }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <div class="btn-group-vertical" role="group">
+                            <button class="btn btn-outline-primary btn-sm" onclick="alert('Reading post: {{ post.title }}')">
+                                Read More
+                            </button>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="alert('Sharing post: {{ post.title }}')">
+                                Share
+                            </button>
+                            <button class="btn btn-outline-success btn-sm" onclick="alert('Liked post: {{ post.title }}')">
+                                Like
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="text-center py-5">
+        <h4 class="text-muted">No posts available</h4>
+        <p class="text-muted">There are no blog posts to display at the moment.</p>
+    </div>
+{% endif %}
+
+<!-- Template Inheritance Demo -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">Template Inheritance Features</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h6>Inherited from base.html:</h6>
+                <ul class="list-unstyled">
+                    <li>✓ HTML structure</li>
+                    <li>✓ Navigation bar</li>
+                    <li>✓ Flash messages</li>
+                    <li>✓ Footer</li>
+                    <li>✓ Bootstrap CSS/JS</li>
+                    <li>✓ Global variables (site_name, current_year, etc.)</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>Customized in this template:</h6>
+                <ul class="list-unstyled">
+                    <li>✓ Page title</li>
+                    <li>✓ Main content area</li>
+                    <li>✓ Posts-specific layout</li>
+                    <li>✓ Custom styling</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template Blocks Demo -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">Template Blocks Usage</h5>
+    </div>
+    <div class="card-body">
+        <p>This template demonstrates the use of template blocks:</p>
+        <ul>
+            <li><code>{% block title %}</code> - Overrides the page title</li>
+            <li><code>{% block content %}</code> - Defines the main content area</li>
+            <li><code>{% extends "base.html" %}</code> - Inherits from base template</li>
+        </ul>
+        
+        <div class="alert alert-info">
+            <strong>Note:</strong> Template inheritance allows you to create a base template with common elements 
+            (header, footer, navigation) and extend it in child templates with specific content.
+        </div>
+    </div>
+</div>
+{% endblock %}

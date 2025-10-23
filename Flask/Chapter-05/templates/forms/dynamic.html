@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Dynamic Form{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Dynamic Form</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Create a form with dynamic fields that can be added or removed.</p>
+                
+                <!-- Dynamic Form -->
+                <form method="POST" action="{{ url_for('dynamic_form') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="form-control" + (" is-invalid" if form.name.errors else "")) }}
+                        {% if form.name.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Items</label>
+                        <div id="items-container">
+                            {% for item in form.items %}
+                                <div class="input-group mb-2 item-field">
+                                    {{ item(class="form-control") }}
+                                    <button type="button" class="btn btn-outline-danger remove-item">Remove</button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button type="button" class="btn btn-outline-success" id="add-item">Add Item</button>
+                        <div class="form-text">Minimum 1 item, maximum 10 items</div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="reset" class="btn btn-outline-secondary me-md-2">Clear Form</button>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dynamic Form Features -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Dynamic Form Features</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>JavaScript Features:</h6>
+                        <ul class="list-unstyled">
+                            <li>✓ Add/remove fields dynamically</li>
+                            <li>✓ Field validation</li>
+                            <li>✓ AJAX integration</li>
+                            <li>✓ User-friendly interface</li>
+                            <li>✓ Field limits enforcement</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>WTForms Features:</h6>
+                        <ul class="list-unstyled">
+                            <li>• FieldList for dynamic fields</li>
+                            <li>• Form validation</li>
+                            <li>• CSRF protection</li>
+                            <li>• Error handling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Form Code -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Dynamic Form Implementation</h5>
+            </div>
+            <div class="card-body">
+                <pre><code># Form definition
+class DynamicForm(FlaskForm):
+    name = StringField('Form Name', validators=[DataRequired()])
+    items = FieldList(StringField('Item'), min_entries=1, max_entries=10)
+    submit = SubmitField('Submit Dynamic Form')
+
+# JavaScript for dynamic fields
+document.getElementById('add-item').addEventListener('click', function() {
+    const container = document.getElementById('items-container');
+    const newField = document.createElement('div');
+    newField.className = 'input-group mb-2 item-field';
+    newField.innerHTML = `
+        <input type="text" class="form-control" name="items-${Date.now()}">
+        <button type="button" class="btn btn-outline-danger remove-item">Remove</button>
+    `;
+    container.appendChild(newField);
+});</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let itemCount = {{ form.items|length }};
+    const maxItems = 10;
+    
+    // Add item functionality
+    document.getElementById('add-item').addEventListener('click', function() {
+        if (itemCount < maxItems) {
+            const container = document.getElementById('items-container');
+            const newField = document.createElement('div');
+            newField.className = 'input-group mb-2 item-field';
+            newField.innerHTML = `
+                <input type="text" class="form-control" name="items" placeholder="Enter item">
+                <button type="button" class="btn btn-outline-danger remove-item">Remove</button>
+            `;
+            container.appendChild(newField);
+            itemCount++;
+            
+            if (itemCount >= maxItems) {
+                document.getElementById('add-item').disabled = true;
+            }
+        }
+    });
+    
+    // Remove item functionality
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-item')) {
+            if (itemCount > 1) {
+                e.target.parentElement.remove();
+                itemCount--;
+                document.getElementById('add-item').disabled = false;
+            } else {
+                alert('At least one item is required');
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
