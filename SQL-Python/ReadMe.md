@@ -1,0 +1,1 @@
+** This folder contains full learning curve for SQL database --> Mainly MySQL DBMS using python language** 
